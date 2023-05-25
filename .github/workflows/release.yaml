@@ -13,7 +13,7 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Setup .NET Core
-        uses: actions/setup-dotnet@v1
+        uses: actions/setup-dotnet@v2
         with:
           dotnet-version: '6.x'
 
@@ -32,7 +32,7 @@ jobs:
           $symbols = Get-ChildItem out/*.symbols.nupkg;
           foreach ($symbol in $symbols) {
             Write-Host "Pushing symbols $symbol";
-            $nupkg = $symbol.Replace(".symbols.nupkg",".nupkg");
+            $nupkg = $symbol.Replace(".symbols.nupkg",".nupkg", [System.StringComparison]::OrdinalIgnoreCase);
             Write-Host "Pushing nupkg $nupkg";
             dotnet nuget push $nupkg --skip-duplicate --api-key ${{ secrets.NUGET_API_KEY }} --symbols $symbol;
           }
