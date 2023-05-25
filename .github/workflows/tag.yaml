@@ -1,15 +1,13 @@
 name: Create Git tag
 
 on:
-  push:
-    branches:
-      - main
-
-inputs:
-  tag-version:
-    description: 'The version number for the Git tag'
-    required: true
-    default: 'v1.0.0'
+  workflow_call:
+    inputs:
+      git-tag:
+        description: 'The version number for the Git tag'
+        required: true
+        default: 'v1.0.0'
+        type: string
 
 jobs:
   create-tag:
@@ -46,5 +44,5 @@ jobs:
               sha: commit.sha
             });
           env:
-            tag-version: ${{ inputs.tag-version }}
+            tag-version: ${{ inputs.git-tag }}
     
