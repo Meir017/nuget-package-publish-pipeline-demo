@@ -1,0 +1,50 @@
+name: Create Git tag
+
+on:
+  push:
+    branches:
+      - main
+
+inputs:
+  tag-version:
+    description: 'The version number for the Git tag'
+    required: true
+    default: 'v1.0.0'
+
+jobs:
+  create-tag:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Create Git tag
+        if: ${{ github.ref == 'refs/heads/main' }}
+        uses: actions/github-script@v4
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const tag = core.getInput('tag-version');
+            const octokit = new Octokit();
+            const { data: commit } = await octokit.rest.repos.getCommit({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              ref: context.sha
+            });
+            await octokit.rest.git.createTag({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              tag: tag,
+              message: `Release version ${tag}`,
+              object: commit.sha,
+              type: 'commit'
+            });
+            await octokit.rest.git.createRef({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              ref: `refs/tags/${tag}`,
+              sha: commit.sha
+            });
+          env:
+            tag-version: ${{ inputs.tag-version }}
+    
