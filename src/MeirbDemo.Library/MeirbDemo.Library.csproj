@@ -1,0 +1,32 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <PackageId>MeirbDemo.Library</PackageId>
+    <Version>0.1.0</Version>
+    <Authors>Meir Blachman</Authors>
+    <Copyright>Copyright Meir Blachman 2023-</Copyright>
+    
+    <Description>Demo library.</Description>
+    <PackageTags>demo</PackageTags>
+    <PackageReleaseNotes>See https://github.com/meir017/nuget-package-publish-pipeline-demo/releases/</PackageReleaseNotes>
+    
+    <PackageReadmeFile>docs/README.md</PackageReadmeFile>
+    <PackageIcon>resources/demo.jpeg</PackageIcon>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/meir017/nuget-package-publish-pipeline-demo</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/meir017/nuget-package-publish-pipeline-demo</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\..\README.md" Pack="true" PackagePath="docs" />
+    <None Include="..\..\resources\" Pack="true" PackagePath="resources" />
+  </ItemGroup>
+
+</Project>
