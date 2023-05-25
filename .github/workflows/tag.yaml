@@ -23,6 +23,7 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
             const tag = core.getInput('tag-version');
+            const { Octokit } = require('@octokit/rest');
             const octokit = new Octokit();
             const { data: commit } = await octokit.rest.repos.getCommit({
               owner: context.repo.owner,
