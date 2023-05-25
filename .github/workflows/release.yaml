@@ -20,7 +20,7 @@ jobs:
       - name: Restore dependencies
         run: dotnet restore
 
-      - name: Biuld & Pack NuGet package
+      - name: Build & Pack NuGet package
         shell: pwsh
         run: |
           $tag = $env:GITHUB_REF.Substring('refs/tags/v'.Length)
@@ -32,7 +32,7 @@ jobs:
           $symbols = Get-ChildItem out/*.symbols.nupkg;
           foreach ($symbol in $symbols) {
             Write-Host "Pushing symbols $symbol";
-            $nupkg = $symbol.Replace('.symbols.nupkg','.nupkg');
+            $nupkg = $symbol.Replace(".symbols.nupkg",".nupkg");
             Write-Host "Pushing nupkg $nupkg";
-            dotnet nuget push "out/$nupkg" --skip-duplicate --api-key ${{ secrets.NUGET_API_KEY }} --symbols "out/$symbol";
+            dotnet nuget push $nupkg --skip-duplicate --api-key ${{ secrets.NUGET_API_KEY }} --symbols $symbol;
           }
