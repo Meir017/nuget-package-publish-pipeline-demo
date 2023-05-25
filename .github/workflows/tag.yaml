@@ -43,6 +43,4 @@ jobs:
               ref: `refs/tags/${tag}`,
               sha: commit.sha
             });
-          env:
-            tag-version: ${{ inputs.git-tag }}
     
