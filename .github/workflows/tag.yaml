@@ -25,12 +25,12 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
             const tag = core.getInput('git-tag');
-            const { data: commit } = await github.git.getCommit({
+            const { data: commit } = await github.rest.git.getCommit({
               owner: context.repo.owner,
               repo: context.repo.repo,
               ref: context.sha
             });
-            await github.git.createTag({
+            await github.rest.git.createTag({
               owner: context.repo.owner,
               repo: context.repo.repo,
               tag: tag,
@@ -38,7 +38,7 @@ jobs:
               object: commit.sha,
               type: 'commit'
             });
-            await github.git.createRef({
+            await github.rest.git.createRef({
               owner: context.repo.owner,
               repo: context.repo.repo,
               ref: `refs/tags/${tag}`,
