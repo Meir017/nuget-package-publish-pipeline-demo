@@ -29,7 +29,7 @@ jobs:
       - name: Publish NuGet package
         shell: pwsh
         run: |
-          $symbols = Get-ChildItem out/*.symbols.nupkg;
+          $symbols = Get-ChildItem out/*.symbols.nupkg | ForEach-Object FullName;
           foreach ($symbol in $symbols) {
             Write-Host "Pushing symbols $symbol";
             $nupkg = $symbol.Replace(".symbols.nupkg",".nupkg", [System.StringComparison]::OrdinalIgnoreCase);
