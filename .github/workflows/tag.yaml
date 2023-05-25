@@ -11,6 +11,8 @@ on:
 
 jobs:
   create-tag:
+    permissions:
+      contents: write
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
