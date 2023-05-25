@@ -32,7 +32,7 @@ jobs:
           $symbols = Get-ChildItem out/*.symbols.nupkg | ForEach-Object FullName;
           foreach ($symbol in $symbols) {
             Write-Host "Pushing symbols $symbol";
-            $nupkg = $symbol.Replace(".symbols.nupkg",".nupkg", [System.StringComparison]::OrdinalIgnoreCase);
+            $nupkg = $symbol.Replace(".symbols.nupkg",".nupkg");
             Write-Host "Pushing nupkg $nupkg";
             dotnet nuget push $nupkg --skip-duplicate --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json;
           }
