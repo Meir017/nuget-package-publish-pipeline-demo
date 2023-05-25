@@ -24,7 +24,7 @@ jobs:
         shell: pwsh
         run: |
           $tag = $env:GITHUB_REF.Substring('refs/tags/v'.Length)
-          dotnet pack --configuration Release --include-symbols -p:Version=$tag
+          dotnet pack --output out --configuration Release --include-symbols -p:Version=$tag
 
       - name: Publish NuGet package
         shell: pwsh
