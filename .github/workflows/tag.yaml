@@ -1,13 +1,13 @@
 name: Create Git tag
 
 on:
-  workflow_call:
+  workflow_dispatch:
     inputs:
       git-tag:
         description: 'The version number for the Git tag'
         required: true
         default: 'v1.0.0'
-        type: string
+        type: string    
 
 jobs:
   create-tag:
