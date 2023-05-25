@@ -31,6 +31,8 @@ jobs:
         run: |
           $symbols = Get-ChildItem out/*.symbols.nupkg;
           foreach ($symbol in $symbols) {
+            Write-Host "Pushing symbols $symbol";
             $nupkg = $symbol.Replace('.symbols','.nupkg');
+            Write-Host "Pushing nupkg $nupkg";
             dotnet nuget push "out/$nupkg" --skip-duplicate --api-key ${{ secrets.NUGET_API_KEY }} --symbols "out/$symbol";
           }
