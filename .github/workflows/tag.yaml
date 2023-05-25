@@ -25,11 +25,13 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
             const tag = core.getInput('git-tag');
-            const { data: commit } = await github.rest.git.getCommit({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              ref: context.sha
-            });
+            
+            const { execSync } = require('child_process');
+            const commitHash = execSync('git rev-parse HEAD').toString().trim();
+
+            console.log(`Current commit hash: ${commitHash}`);
+            console.log(`Creating tag: ${tag}`);
+            
             await github.rest.git.createTag({
               owner: context.repo.owner,
               repo: context.repo.repo,
