@@ -22,7 +22,7 @@ jobs:
 
       - name: Biuld & Pack NuGet package
         shell: pwsh
-        run: 
+        run: |
           $tag = $env:GITHUB_REF.Substring(1)
           dotnet pack --configuration Release --include-symbols -p:Version=$tag
 
