@@ -24,7 +24,7 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
-            const tag = core.getInput('git-tag');
+            const tag = '${{ inputs.git-tag }}';
             
             const { execSync } = require('child_process');
             const commitHash = execSync('git rev-parse HEAD').toString().trim();
@@ -37,13 +37,13 @@ jobs:
               repo: context.repo.repo,
               tag: tag,
               message: `Release version ${tag}`,
-              object: commit.sha,
+              object: commitHash,
               type: 'commit'
             });
             await github.rest.git.createRef({
               owner: context.repo.owner,
               repo: context.repo.repo,
               ref: `refs/tags/${tag}`,
-              sha: commit.sha
+              sha: commitHash
             });
     
