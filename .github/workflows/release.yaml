@@ -27,6 +27,7 @@ jobs:
           dotnet pack --configuration Release --include-symbols -p:Version=$tag
 
       - name: Publish NuGet package
+        shell: pwsh
         run: |
           $symbols = Get-ChildItem out/*.symbols.nupkg;
           foreach ($symbol in $symbols) {
