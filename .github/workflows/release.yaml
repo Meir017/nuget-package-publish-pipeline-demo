@@ -27,9 +27,9 @@ jobs:
         run: dotnet pack --configuration Release --no-build --include-symbols
 
       - name: Publish NuGet package
-        uses: nuget/publish@v1
-        with:
-          nuget-version: '5.x'
-          nuget-api-key: ${{ secrets.NUGET_API_KEY }}
-          nuget-package: 'out/*.nupkg'
-          nuget-push-options: '--skip-duplicate'
+        run: |
+          $symbols = Get-ChildItem out/*.symbols.nupkg
+          foreach ($symbol in $symbols) {
+            $nupkg = $symbol.Replace('.symbols','.nupkg')
+            dotnet nuget push "out/$nupkg" --skip-duplicate --api-key ${{ secrets.NUGET_API_KEY }} --symbols "out/$symbol"
+          }
